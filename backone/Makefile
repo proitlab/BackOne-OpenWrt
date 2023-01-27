@@ -13,7 +13,7 @@ PKG_REV:=5140e3bb303e2f85decef3cd8f47602e6f5a330b
 PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
-PKG_SOURCE_URL:=https:///github.com/proitlab/BackOne.git
+PKG_SOURCE_URL:=https://github.com/proitlab/BackOne.git
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
 PKG_SOURCE_VERSION:=$(PKG_REV)

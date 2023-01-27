@@ -27,14 +27,11 @@ start_instance() {
 
 	mkdir -p $config_path
 
-	if [ ! -f /var/lib/backone/world ]       
-        then                                     
-                echo                             
-                echo "Please stop and start backone again to fix the world!"
-                echo                                                        
-        else                                                                
-                cp -f $config_path/world /var/lib/backone/world             
-        fi  
+	mkdir -p /var/lib/backone
+	if [ -f $config_path/world ]
+	then
+        	cp -f $config_path/world /var/lib/backone/world             
+	fi
 
 	mkdir -p /var/lib/backone/networks.d/
 

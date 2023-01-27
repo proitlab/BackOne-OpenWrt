@@ -9,7 +9,7 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=backone
 PKG_VERSION:=1.1.14
-PKG_REV:=5140e3bb303e2f85decef3cd8f47602e6f5a330b
+PKG_REV:=f73a8d879dcefbd6a6642de62f7a1ec0df7fdf41
 PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2

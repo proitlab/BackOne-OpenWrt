@@ -49,7 +49,7 @@ sudo apt-get install libncurses5-dev gawk gettext unzip file libssl-dev wget
 
 Now build OpenWrt:
 ```
-git clone git://git.openwrt.org/15.05/openwrt.git
+git clone https://github.com/openwrt/openwrt.git
 cd openwrt
 
 ./scripts/feeds update -a

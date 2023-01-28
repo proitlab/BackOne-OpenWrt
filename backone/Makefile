@@ -1,26 +1,24 @@
 #
-# Copyright (C) 2016 OpenWrt.org
-#
-# This is free software, licensed under the GNU General Public License v3.
+# This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
 #
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=backone
-PKG_VERSION:=1.1.14
-PKG_REV:=ed5e586d192d44a157ddf6e1c4513b1b54e38b67
+PKG_VERSION:=1.6.6
 PKG_RELEASE:=1
 
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
-PKG_SOURCE_URL:=https://github.com/proitlab/BackOne.git
-PKG_SOURCE_PROTO:=git
-PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
-PKG_SOURCE_VERSION:=$(PKG_REV)
+PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
+PKG_SOURCE_URL:=https://codeload.github.com/zerotier/ZeroTierOne/tar.gz/$(PKG_VERSION)?
+PKG_HASH:=a437ec9e8a4987ed48c0e5af3895a057dcc0307ab38af90dd7729a131097f222
+PKG_BUILD_DIR:=$(BUILD_DIR)/BackOne-$(PKG_VERSION)
 
-PKG_LICENSE:=GPL-3.0
+PKG_MAINTAINER:=Dedy Sutanto <dedy.sutanto@proit.co.id>
+PKG_LICENSE:=BSL 1.1
+PKG_LICENSE_FILES:=LICENSE.txt
 
-PKG_BUILD_DEPENDS:=uclibcxx
+PKG_ASLR_PIE:=0
 PKG_BUILD_PARALLEL:=1
 
 include $(INCLUDE_DIR)/package.mk
@@ -28,44 +26,40 @@ include $(INCLUDE_DIR)/package.mk
 define Package/backone
   SECTION:=net
   CATEGORY:=Network
-  DEPENDS:=+libpthread +kmod-tun +ip
+  DEPENDS:=+libpthread +libstdcpp +kmod-tun +ip +libminiupnpc +libnatpmp
   TITLE:=Create flat virtual Ethernet networks of almost unlimited size
   URL:=https://backone.cloud
   SUBMENU:=VPN
 endef
 
 define Package/backone/description
-	BackOne creates a global provider-independent virtual private cloud network.
+	BackOne global ethernet switch.
 endef
 
 define Package/backone/config
 	source "$(SOURCE)/Config.in"
 endef
 
-ifeq ($(CONFIG_BACKONE_ENABLE_NETWORK_CONTROLLER),y)
-MAKE_FLAGS += ZT_ENABLE_NETWORK_CONTROLLER=1
-DEPENDS+=+sqlite
-endif
-
-ifeq ($(CONFIG_BACKONE_USE_MINIUPNPC),y)
-MAKE_FLAGS += ZT_USE_MINIUPNPC=1
-DEPENDS+=+libminiupnpc
-endif
-
 ifeq ($(CONFIG_BACKONE_ENABLE_DEBUG),y)
-TARGET_CXXFLAGS += -DZT_TRACE -ggdb3
+MAKE_FLAGS += ZT_DEBUG=1
 endif
 
 MAKE_FLAGS += \
-	LDFLAGS+=" -L$(STAGING_DIR)/usr/lib/uClibc++ -pthread " \
-	LDLIBS+=" -fno-builtin -nodefaultlibs -Wl,-Bstatic -luClibc++ -Wl,-Bdynamic  -lpthread -lm -lc -lsupc++ -lc -lgcc -lgcc_eh -lgcc_s  -lpthread -lm " \
-	CXXFLAGS+=" -fno-builtin -nostdinc++ -I$(STAGING_DIR)/usr/include/uClibc++ -DGCC_HASCLASSVISIBILITY -Wall -fPIE -fvisibility=hidden "
+	DEFS="" \
 
 define Build/Compile
 	$(call Build/Compile/Default,one)
 ifeq ($(CONFIG_BACKONE_ENABLE_SELFTEST),y)
 	$(call Build/Compile/Default,selftest)
 endif
+endef
+
+# Make binary smaller
+TARGET_CFLAGS += -ffunction-sections -fdata-sections
+TARGET_LDFLAGS += -Wl,--gc-sections,--as-needed
+
+define Package/backone/conffiles
+/etc/config/backone
 endef
 
 define Package/backone/install
@@ -78,10 +72,7 @@ ifeq ($(CONFIG_BACKONE_ENABLE_SELFTEST),y)
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/backone-selftest $(1)/usr/bin/
 endif
 
-	$(INSTALL_DIR) $(1)/etc/init.d/
-	$(INSTALL_BIN) files/backone.init $(1)/etc/init.d/backone
-	$(INSTALL_DIR) $(1)/etc/config
-	$(INSTALL_CONF) files/backone.config $(1)/etc/config/backone
+	$(CP) ./files/* $(1)/
 endef
 
 $(eval $(call BuildPackage,backone))

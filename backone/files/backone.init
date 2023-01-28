@@ -27,11 +27,9 @@ start_instance() {
 
 	mkdir -p $config_path
 
-	mkdir -p /var/lib/backone
-	if [ -f $config_path/world ]
-	then
-        	cp -f $config_path/world /var/lib/backone/world             
-	fi
+        if [ ! -L /var/lib/backone ] && [ -e /var/lib/backone ]; then
+                ln -s $config_path /var/lib/backone
+        fi
 
 	mkdir -p /var/lib/backone/networks.d/
 

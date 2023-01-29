@@ -1,4 +1,5 @@
 # ZeroTier-OpenWrt
+## v1.8.8
 
 *ZeroTier has been merged into the [official package repository](https://openwrt.org/packages/pkgdata/zerotier) and can be selected using the opkg package management tool.*
 

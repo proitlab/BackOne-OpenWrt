@@ -55,7 +55,7 @@ cd openwrt
 ./scripts/feeds update -a
 ./scripts/feeds install -a
 
-git clone https://github.com/mwarning/zerotier-openwrt.git
+git clone https://github.com/proitlab/BackOne-OpenWrt.git
 cp -rf BackOne-OpenWrt/backone package/
 rm -rf BackOne-OpenWrt/
 

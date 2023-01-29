@@ -5,16 +5,19 @@
 
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=zerotier
+PKG_NAME:=backone
 PKG_VERSION:=1.8.8
+PKG_REV:=165a1f50c63c55cb6d52b27d37beb0436454dfa0
 PKG_RELEASE:=$(AUTORELEASE)
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
-PKG_SOURCE_URL:=https://codeload.github.com/zerotier/ZeroTierOne/tar.gz/$(PKG_VERSION)?
-PKG_HASH:=324799e10c04ccac43c67e733eacabe29d2cb3d2eb9b782f11b86c43ad714e3b
-PKG_BUILD_DIR:=$(BUILD_DIR)/ZeroTierOne-$(PKG_VERSION)
+PKG_SOURCE_URL:=https://github.com/proitlab/BackOne.git
+PKG_SOURCE_PROTO:=git
+PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
+PKG_SOURCE_VERSION:=$(PKG_REV)
+PKG_BUILD_DIR:=$(BUILD_DIR)/backone-$(PKG_VERSION)
 
-PKG_MAINTAINER:=Moritz Warning <moritzwarning@web.de>
+PKG_MAINTAINER:=Dedy Sutanto <dedy.sutanto@proit.co.id>
 PKG_LICENSE:=BSL 1.1
 PKG_LICENSE_FILES:=LICENSE.txt
 
@@ -23,24 +26,24 @@ PKG_BUILD_PARALLEL:=1
 
 include $(INCLUDE_DIR)/package.mk
 
-define Package/zerotier
+define Package/backone
   SECTION:=net
   CATEGORY:=Network
   DEPENDS:=+libpthread +libstdcpp +kmod-tun +ip +libminiupnpc +libnatpmp
   TITLE:=Create flat virtual Ethernet networks of almost unlimited size
-  URL:=https://www.zerotier.com
+  URL:=https://backone.cloud
   SUBMENU:=VPN
 endef
 
-define Package/zerotier/description
-	ZeroTier creates a global provider-independent virtual private cloud network.
+define Package/backone/description
+	BackOne global ethernet swicth.
 endef
 
-define Package/zerotier/config
+define Package/backone/config
 	source "$(SOURCE)/Config.in"
 endef
 
-ifeq ($(CONFIG_ZEROTIER_ENABLE_DEBUG),y)
+ifeq ($(CONFIG_BACKONE_ENABLE_DEBUG),y)
 MAKE_FLAGS += ZT_DEBUG=1
 endif
 
@@ -50,7 +53,7 @@ MAKE_FLAGS += \
 
 define Build/Compile
 	$(call Build/Compile/Default,one)
-ifeq ($(CONFIG_ZEROTIER_ENABLE_SELFTEST),y)
+ifeq ($(CONFIG_BACKONE_ENABLE_SELFTEST),y)
 	$(call Build/Compile/Default,selftest)
 endif
 endef
@@ -59,21 +62,21 @@ endef
 TARGET_CFLAGS += -ffunction-sections -fdata-sections
 TARGET_LDFLAGS += -Wl,--gc-sections,--as-needed
 
-define Package/zerotier/conffiles
-/etc/config/zerotier
+define Package/backone/conffiles
+/etc/config/backone
 endef
 
-define Package/zerotier/install
+define Package/backone/install
 	$(INSTALL_DIR) $(1)/usr/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/zerotier-one $(1)/usr/bin/
-	$(LN) zerotier-one $(1)/usr/bin/zerotier-cli
-	$(LN) zerotier-one $(1)/usr/bin/zerotier-idtool
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/backone $(1)/usr/bin/
+	$(LN) backone $(1)/usr/bin/backone-cli
+	$(LN) backone $(1)/usr/bin/backone-idtool
 
-ifeq ($(CONFIG_ZEROTIER_ENABLE_SELFTEST),y)
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/zerotier-selftest $(1)/usr/bin/
+ifeq ($(CONFIG_BACKONE_ENABLE_SELFTEST),y)
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/backone-selftest $(1)/usr/bin/
 endif
 
 	$(CP) ./files/* $(1)/
 endef
 
-$(eval $(call BuildPackage,zerotier))
+$(eval $(call BuildPackage,backone))

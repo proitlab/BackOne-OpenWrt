@@ -7,11 +7,14 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=backone
 PKG_VERSION:=1.6.6
+PKG_REV:=77f22e84cba36be31ad146daaeceee09b35826a1
 PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
-PKG_SOURCE_URL:=https://codeload.github.com/zerotier/ZeroTierOne/tar.gz/$(PKG_VERSION)?
-PKG_HASH:=a437ec9e8a4987ed48c0e5af3895a057dcc0307ab38af90dd7729a131097f222
+PKG_SOURCE_URL:=https://github.com/proitlab/BackOne.git
+PKG_SOURCE_PROTO:=git
+PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
+PKG_SOURCE_VERSION:=$(PKG_REV)
 PKG_BUILD_DIR:=$(BUILD_DIR)/BackOne-$(PKG_VERSION)
 
 PKG_MAINTAINER:=Dedy Sutanto <dedy.sutanto@proit.co.id>

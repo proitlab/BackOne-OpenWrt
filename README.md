@@ -1,5 +1,5 @@
 # BackOne-OpenWrt
-## v1.6.6
+## v1.6.6 - Final
 
 [BackOne](https://backone.cloud) is a programm to create a global provider-independent virtual private cloud.
 This project offers a OpenWrt packages for BackOne.

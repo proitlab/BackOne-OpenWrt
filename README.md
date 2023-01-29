@@ -1,37 +1,9 @@
-# ZeroTier-OpenWrt
+# BackOne-OpenWrt
 ## v1.8.8
-
-*ZeroTier has been merged into the [official package repository](https://openwrt.org/packages/pkgdata/zerotier) and can be selected using the opkg package management tool.*
-
-[ZeroTier One](https://www.zerotier.com) is a program to create a global provider-independent virtual private cloud.
-This project offers OpenWrt packages for ZeroTier.
-
-## Installing package
-
-Download the [prebuild package](https://github.com/mwarning/zerotier-openwrt/releases) and copy it onto your OpenWrt installation, preferably into the /tmp folder.
-
-Then install the ipk package file:
-
-```
-opkg install zerotier_*.ipk
-```
-
-Now enable ZeroTier:
-
-```
-uci set zerotier.sample_config.enabled='1'
-uci commit zerotier
-```
-
-Now start ZeroTier
-
-```
-/etc/init.d/zerotier start
-```
 
 ## Compiling from Sources
 
-To include ZeroTier One into your OpenWrt image or to create
+To include BackOne into your OpenWrt image or to create
 an .ipk package (equivalent to Debians .deb files),
 you have to build an OpenWrt image.
 
@@ -52,7 +24,7 @@ cd openwrt
 ./scripts/feeds install -a
 ```
 
-Now you can insert the zerotier package using a package feed (see `Add package by feed`) or add the package manually (see `Add package by hand`).
+Now you can insert the backone package using a package feed (see `Add package by feed`) or add the package manually (see `Add package by hand`).
 
 ### Add package by feed
 
@@ -61,14 +33,14 @@ A feed is the standard way packages are made available to the OpenWrt build syst
 Put this line in your feeds list file (e.g. `feeds.conf`, or `feeds.conf.default`)
 
 ```
-src-git zerotier https://github.com/mwarning/zerotier-openwrt.git
+src-git backone https://github.com/proitlab/BackOne-OpenWrt.git
 ```
 
 Update and install the new feed
 
 ```
-./scripts/feeds update zerotier
-./scripts/feeds install zerotier
+./scripts/feeds update backone
+./scripts/feeds install backone
 ```
 
 Now continue with the building packages section (see `Building Packages`).
@@ -76,9 +48,9 @@ Now continue with the building packages section (see `Building Packages`).
 ### Add package by hand
 
 ```
-git clone https://github.com/mwarning/zerotier-openwrt.git
-cp -rf zerotier-openwrt/zerotier package/
-rm -rf zerotier-openwrt/
+git clone https://github.com/proitlab/BackOne-OpenWrt.git
+cp -rf BackOne-OpenWrt/backone package/
+rm -rf BackOne-OpenWrt/
 ```
 
 Now continue with the building packages section (see `Building Packages`).
@@ -93,7 +65,7 @@ make menuconfig
 
 Now select the appropiate "Target System" and "Target Profile"
 depending on what target chipset/router you want to build for.
-Also mark the ZeroTier package under Network ---> VPN ---> <\*> zerotier.
+Also mark the ZeroTier package under Network ---> VPN ---> <\*> backone.
 
 Now compile/build everything:
 
@@ -101,7 +73,7 @@ Now compile/build everything:
 make -j8
 ```
 
-The images and all \*.ipk packages are now inside the `bin/` folder, including the zerotier package.
+The images and all \*.ipk packages are now inside the `bin/` folder, including the backone package.
 You can install the ZeroTier .ipk on the target device using `opkg install <ipkg-file>`.
 
 For details please check the OpenWrt documentation.
@@ -129,7 +101,7 @@ For a release, it is useful the build packages at a bulk for multiple targets:
   make -j4 toolchain/install
 
   # Build package
-  make package/zerotier/{clean,compile}
+  make package/backone/{clean,compile}
 
   # Free space (optional)
   rm -rf build_dir/target-*

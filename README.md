@@ -1,5 +1,5 @@
 # BackOne-OpenWrt
-## v1.8.8
+## v1.10.3
 
 ## Compiling from Sources
 
@@ -65,7 +65,7 @@ make menuconfig
 
 Now select the appropiate "Target System" and "Target Profile"
 depending on what target chipset/router you want to build for.
-Also mark the ZeroTier package under Network ---> VPN ---> <\*> backone.
+Also mark the BackOne package under Network ---> VPN ---> <\*> backone.
 
 Now compile/build everything:
 
@@ -74,7 +74,7 @@ make -j8
 ```
 
 The images and all \*.ipk packages are now inside the `bin/` folder, including the backone package.
-You can install the ZeroTier .ipk on the target device using `opkg install <ipkg-file>`.
+You can install the BackOne .ipk on the target device using `opkg install <ipkg-file>`.
 
 For details please check the OpenWrt documentation.
 

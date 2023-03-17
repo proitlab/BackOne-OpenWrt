@@ -6,7 +6,8 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=backone
-PKG_VERSION:=1.8.8
+PKG_VERSION:=1.10.3
+# Change this COMMIT HASH!
 PKG_REV:=165a1f50c63c55cb6d52b27d37beb0436454dfa0
 PKG_RELEASE:=$(AUTORELEASE)
 

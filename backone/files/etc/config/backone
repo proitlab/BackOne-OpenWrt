@@ -1,9 +1,10 @@
+
 config backone main_config
 	option enabled 0
 
-	# persistent configuration folder (for BackOne controller mode)
+	# persistent configuration folder (for ZT controller mode)
 	option config_path '/etc/backone'
-	# copy <config_path> to RAM to prevent writing to flash (for BackOne controller mode)
+	# copy <config_path> to RAM to prevent writing to flash (for ZT controller mode)
 	#option copy_config_path '1'
 
 	#option port '9993'
